@@ -1,0 +1,143 @@
+/* Define o estilo para a janela */
+.root {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 20px;
+    -fx-font-family: Arial, sans-serif;
+}
+
+/* Estilo para os Labels */
+.label {
+    -fx-font-size: 22px;
+    -fx-text-fill: #333;
+}
+
+/* Estilo para os campos de texto */
+.text-field {
+    -fx-font-size: 22px;
+    -fx-pref-width: 300px;
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #888;
+    -fx-border-width: 1px;
+}
+
+/* Estilo para o TextArea */
+.text-area {
+    -fx-font-size: 18px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 300px;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #888;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+}
+
+/* Estilo para os botões */
+.button {
+    -fx-font-size: 22px;
+    -fx-pref-width: 250px;
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+    -fx-padding: 15px;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Estilo para a área de gráfico (canvas) */
+.canvas {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #888;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}/* Define o estilo para a janela */
+.root {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 20px;
+    -fx-font-family: Arial, sans-serif;
+}
+
+/* Estilo para os Labels */
+.label {
+    -fx-font-size: 22px;
+    -fx-text-fill: #333;
+}
+
+/* Estilo para os campos de texto */
+.text-field {
+    -fx-font-size: 22px;
+    -fx-pref-width: 300px;
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #888;
+    -fx-border-width: 1px;
+}
+
+/* Estilo para o TextArea */
+.text-area {
+    -fx-font-size: 18px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 300px;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #888;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+}
+
+/* Estilo para os botões */
+.button {
+    -fx-font-size: 22px;
+    -fx-pref-width: 250px;
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+    -fx-padding: 15px;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Estilo para a área de gráfico (canvas) */
+.canvas {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #888;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); /* Adicionando sombra suave ao plano */
+}
+
+/* Estilo do plano cartesiano */
+.plano-cartesiano {
+    -fx-border-color: #2C3E50; /* Cor de borda mais forte */
+    -fx-border-width: 2px;
+    -fx-background-color: #ECF0F1; /* Cor de fundo mais suave */
+    -fx-border-radius: 10px;
+    -fx-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para dar um efeito de profundidade */
+    -fx-background-insets: 0, 0, 0; /* Aumentando a suavidade da transição de cor */
+    -fx-background-radius: 15px; /* Bordas mais arredondadas */
+}
+
+/* Adicionando display flex para alinhar o plano cartesiano à esquerda */
+.plano-cartesiano-container {
+    -fx-display: flex;
+    -fx-alignment: top-left; /* Alinha o conteúdo à esquerda */
+    -fx-hgap: 20px;
+    -fx-vgap: 20px;
+    -fx-padding: 20px;
+}
+
+
+/* Estilo do plano cartesiano */
+.plano-cartesiano {
+    -fx-border-color: #2C3E50;
+    -fx-border-width: 2px;
+    -fx-background-color: #ECF0F1;
+    -fx-border-radius: 10px;
+}
