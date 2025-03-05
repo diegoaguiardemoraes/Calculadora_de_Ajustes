@@ -93,7 +93,7 @@
 /* Estilo para os botões */
 .button {
     -fx-font-size: 22px;
-    -fx-pref-width: 250px;
+    -fx-pref-width: 650px;
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
     -fx-border-radius: 5px;

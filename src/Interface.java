@@ -8,7 +8,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,22 +99,11 @@ public class Interface extends Application {
         grid.add(limpar, 0, 5, 2, 1); // Botão "Limpar" colocado abaixo do gráfico
 
         // Ação do botão "Enviar"
-        enviar.setOnAction(e -> {
-            try {
-                double x = Double.parseDouble(campoX.getText());
-                double y = Double.parseDouble(campoY.getText());
-                listaX.add(x);
-                listaY.add(y);
-                campoX.clear();
-                campoY.clear();
+        enviar.setOnAction(e -> enviarDados());
 
-                // Redesenha o gráfico com o ponto inserido
-                desenharPlanoCartesiano();
-            } catch (NumberFormatException ex) {
-                // Exibe uma mensagem de erro se os valores forem inválidos
-                showError("Digite valores numéricos válidos!");
-            }
-        });
+        // Configuração para capturar o evento de tecla "Enter" nos campos
+        campoX.setOnAction(e -> enviarDados());  // Ao pressionar Enter no campoX
+        campoY.setOnAction(e -> enviarDados());  // Ao pressionar Enter no campoY
 
         // Ação do botão "Calcular"
         calcular.setOnAction(e -> {
@@ -129,7 +117,6 @@ public class Interface extends Application {
             resultadoAjuste.setText(resultado);
 
             // Limpa as listas após o cálculo
-
             desenharPlanoCartesiano();  // Redesenha o gráfico após o cálculo
         });
 
@@ -163,32 +150,49 @@ public class Interface extends Application {
         // Limpar o canvas
         gc.clearRect(0, 0, planoCartesiano.getWidth(), planoCartesiano.getHeight());
 
-        // Desenhar a grade
+        // Desenhar a grade de fundo com base no espaçamento
         gc.setStroke(Color.LIGHTGRAY);
-        gc.setLineWidth(0.5);
-        for (int i = 1; i < 10; i++) {
-            gc.strokeLine(50 + i * 60, 50, 50 + i * 60, planoCartesiano.getHeight() - 50);  // Linhas verticais
-            gc.strokeLine(50, 50 + i * 30, planoCartesiano.getWidth() - 50, 50 + i * 30);  // Linhas horizontais
+        gc.setLineWidth(1.5);
+
+        // Definindo o espaçamento das linhas (1 pixel)
+        int espacamento = 20;  // Espaçamento entre as linhas da grade
+
+        // Linhas verticais para o eixo X (grade)
+        for (int i = 0; i <= (planoCartesiano.getWidth() - 50); i += espacamento) {
+            gc.strokeLine(50 + i, 50, 50 + i, planoCartesiano.getHeight() - 50);  // Linhas verticais
         }
+
+        // Linhas horizontais para o eixo Y (grade)
+        for (int i = 0; i <= (planoCartesiano.getHeight() - 100); i += espacamento) {
+            gc.strokeLine(50, 50 + i, planoCartesiano.getWidth() - 10, 50 + i);  // Linhas horizontais
+        }
+
 
         // Desenhar eixos X e Y
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
-        gc.strokeLine(50, planoCartesiano.getHeight() - 50, planoCartesiano.getWidth() - 50, planoCartesiano.getHeight() - 50);  // Eixo X
+        gc.strokeLine(50, planoCartesiano.getHeight() - 50, 590, planoCartesiano.getHeight() - 50);  // Eixo X com comprimento de 400px
+
         gc.strokeLine(50, 50, 50, planoCartesiano.getHeight() - 50);  // Eixo Y
 
-        // Adicionar setas aos eixos
-        gc.strokeLine(planoCartesiano.getWidth() - 50, planoCartesiano.getHeight() - 50, planoCartesiano.getWidth() - 40, planoCartesiano.getHeight() - 60);  // Setas do eixo X
-        gc.strokeLine(planoCartesiano.getWidth() - 50, planoCartesiano.getHeight() - 50, planoCartesiano.getWidth() - 40, planoCartesiano.getHeight() - 40);
+        // Adicionar setas aos eixo X
+        gc.strokeLine(590, planoCartesiano.getHeight() - 50, 580, planoCartesiano.getHeight() - 60);  // Seta superior
+        gc.strokeLine(590, planoCartesiano.getHeight() - 50, 580, planoCartesiano.getHeight() - 40);  // Seta inferior
 
-        gc.strokeLine(50, 50, 40, 60);  // Setas do eixo Y
-        gc.strokeLine(50, 50, 60, 60);
+        gc.strokeLine(50, 50, 40, 60);  // Setas do eixo Y (parte esquerda)
+        gc.strokeLine(50, 50, 60, 60);  // Setas do eixo Y (parte direita)
 
-        // Adicionar numeração aos eixos X e Y
+        // Adicionar numeração aos eixos X e Y de 1 a 9 no eixo X e de 9 a 1 no eixo Y
         gc.setFont(Font.font(15));
-        for (int i = 1; i < 10; i++) {
-            gc.fillText(String.valueOf(i), 50 + i * 60, planoCartesiano.getHeight() - 30);
-            gc.fillText(String.valueOf(i * 10), 10, 50 + i * 30);
+
+        // Eixo X:
+        for (int i = 1; i <= 12; i++) {
+            gc.fillText(String.valueOf(i), 46 + i * 40, planoCartesiano.getHeight() - 30);  // Ajustando a posição para o eixo X
+        }
+
+        // Eixo Y:
+        for (int i = 5; i >= 1; i--) {
+            gc.fillText(String.valueOf(i), 10, 95 + (4 - i) * 40);  // Ajuste para o eixo Y
         }
 
         // Desenhar os pontos (x, y)
@@ -198,8 +202,8 @@ public class Interface extends Application {
             double y = listaY.get(i);
 
             // Transformar os valores de x e y para caber na tela (normalização)
-            double canvasX = 50 + x * 60;  // Multiplicando para ajustar o ponto no canvas
-            double canvasY = planoCartesiano.getHeight() - 50 - y * 30;  // Inverter o eixo Y para ele ser visível na parte inferior
+            double canvasX = 50 + x * 40;  // Ajustando o espaçamento de x para coincidir com os valores no eixo X
+            double canvasY = planoCartesiano.getHeight() - 50 - y * 40;  // Ajuste da escala do eixo Y
 
             // Desenhar o ponto
             gc.fillOval(canvasX - 5, canvasY - 5, 10, 10);  // Desenhando o ponto como um círculo
@@ -208,13 +212,30 @@ public class Interface extends Application {
             if (i > 0) {
                 double prevX = listaX.get(i - 1);
                 double prevY = listaY.get(i - 1);
-                double prevCanvasX = 50 + prevX * 60;
-                double prevCanvasY = planoCartesiano.getHeight() - 50 - prevY * 30;
+                double prevCanvasX = 50 + prevX * 40;
+                double prevCanvasY = planoCartesiano.getHeight() - 50 - prevY * 40;
 
                 gc.setStroke(Color.BLUE);  // Cor da linha
                 gc.setLineWidth(2);  // Espessura da linha
                 gc.strokeLine(prevCanvasX, prevCanvasY, canvasX, canvasY);  // Desenha a linha entre os pontos
             }
+        }
+    }
+
+        // Método para enviar os dados para as listas
+    private void enviarDados() {
+        try {
+            double x = Double.parseDouble(campoX.getText());
+            double y = Double.parseDouble(campoY.getText());
+            listaX.add(x);
+            listaY.add(y);
+            campoX.clear();
+            campoY.clear();
+
+            // Redesenha o gráfico com o ponto inserido
+            desenharPlanoCartesiano();
+        } catch (NumberFormatException ex) {
+            showError("Digite valores numéricos válidos!");
         }
     }
 
